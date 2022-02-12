@@ -7,8 +7,9 @@ namespace Application
 {
     public interface IRobotProcessor
     {
-        IMarsSurface CreateSurface(string input);
-        bool IsCommandValid();
+        void ParseInput(string[] input);
+        IMarsSurface CreateSurface(int[] input);
+        bool IsCommandValid(string[] input);
 
     }
 }

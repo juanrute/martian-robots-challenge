@@ -6,7 +6,7 @@ namespace Domain
 {
     public interface ICommand
     {
-        void Move(char command, IGridCoordinate point);
+        public void Move(char command, IGridCoordinate point);
 
     }
 }

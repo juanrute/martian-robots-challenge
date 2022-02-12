@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Application;
+using System;
+using System.Collections.Generic;
 
 namespace ConsoleUI
 {
@@ -6,8 +8,17 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            Console.ReadLine();
+            string line;
+            List<string> inputCommand = new List<string>();
+
+            line = Console.ReadLine();
+            while (!String.IsNullOrWhiteSpace(line)) {
+                inputCommand.Add(line);
+                line = Console.ReadLine();
+            }
+
+            IRobotProcessor processor = new RobotProcessor();
+            processor.ParseInput(inputCommand.ToArray());
         }
     }
 }
