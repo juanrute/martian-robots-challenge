@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Domain
 {
-    public interface IMarsSurface
+    public interface ISurface
     {
         IGridCoordinate SuperiorLimit { get; set; }
         IList<IGridCoordinate> Scent { get; set; }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Domain
 {
-    public class MarsSurface : IMarsSurface
+    public class MarsSurface : ISurface
     {
         public IGridCoordinate SuperiorLimit { get ; set ; }
         public IList<IGridCoordinate> Scent { get ; set ; } = new List<IGridCoordinate>();

@@ -1,3 +1,4 @@
+using Domain;
 using NUnit.Framework;
 using System;
 using System.IO;
@@ -7,9 +8,13 @@ namespace Application.Test
 {
     public class RobotProcessorTest
     {
+        RobotProcessor processor;
+
         [SetUp]
         public void Setup()
         {
+            processor = new RobotProcessor();
+            processor.MarsSurface = new MarsSurface();
         }
 
         [Test]
@@ -17,7 +22,6 @@ namespace Application.Test
         {
             var testData = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestData\exampleInput.txt")
                 .Where(line => !string.IsNullOrWhiteSpace(line));
-            RobotProcessor processor = new RobotProcessor();
             Assert.IsTrue(processor.IsCommandValid(testData.ToList()));
             var result = processor.ExcecuteEachRobotCommand(testData.ToList());
 
@@ -34,7 +38,6 @@ namespace Application.Test
         {
             var testData = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestData\middleInput.txt")
                 .Where(line => !string.IsNullOrWhiteSpace(line));
-            RobotProcessor processor = new RobotProcessor();
             Assert.IsTrue(processor.IsCommandValid(testData.ToList()));
             var result = processor.ExcecuteEachRobotCommand(testData.ToList());
 
@@ -66,7 +69,6 @@ namespace Application.Test
         {
             var testData = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestData\longInput.txt")
                 .Where(line => !string.IsNullOrWhiteSpace(line));
-            RobotProcessor processor = new RobotProcessor();
             Assert.IsTrue(processor.IsCommandValid(testData.ToList()));
             var result = processor.ExcecuteEachRobotCommand(testData.ToList());
 
@@ -107,7 +109,7 @@ namespace Application.Test
             Assert.AreEqual("0 45 N", result[23]);
 
             //To make the test long, I sent the same commands to the next 24 robots
-            Assert.AreEqual("0 45 N", result[48]);
+            Assert.AreEqual("0 45 N", result[47]);
         }
 
         [Test]
@@ -115,7 +117,6 @@ namespace Application.Test
         {
             var testData = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestData\exampleInput.txt")
                 .Where(line => !string.IsNullOrWhiteSpace(line));
-            RobotProcessor processor = new RobotProcessor();
             Assert.IsTrue(processor.IsCommandValid(testData.ToList()));
 
         }
@@ -125,7 +126,6 @@ namespace Application.Test
         {
             var testData = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestData\wrongInput.txt")
                 .Where(line => !string.IsNullOrWhiteSpace(line));
-            RobotProcessor processor = new RobotProcessor();
             var ex = Assert.Throws<ArgumentException>(() => processor.IsCommandValid(testData.ToList()));
 
             Assert.That(ex.Message == "Invalid command.");
@@ -136,7 +136,6 @@ namespace Application.Test
         {
             var testData = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestData\wrongInputCommandLen.txt")
                 .Where(line => !string.IsNullOrWhiteSpace(line));
-            RobotProcessor processor = new RobotProcessor();
             var ex = Assert.Throws<ArgumentException>(() => processor.IsCommandValid(testData.ToList()));
 
             Assert.That(ex.Message == "Instructions length must be less or equals to 100.");
@@ -147,7 +146,6 @@ namespace Application.Test
         {
             var testData = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestData\wrongInputCoordinateLen.txt")
                 .Where(line => !string.IsNullOrWhiteSpace(line));
-            RobotProcessor processor = new RobotProcessor();
             var ex = Assert.Throws<ArgumentException>(() => processor.IsCommandValid(testData.ToList()));
 
             Assert.That(ex.Message == "Coordinates length must be less or equals to 50.");

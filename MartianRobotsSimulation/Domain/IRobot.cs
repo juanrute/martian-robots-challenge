@@ -8,8 +8,9 @@ namespace Domain
     {
         IGridCoordinate CoordinatePosition { get; set; }
         IOrientation Position { get; set; }
-        IMarsSurface Surface { get; set; }
+        ISurface Surface { get; set; }
         bool IsLost { get; set; }
         void ExecuteCommand(string command);
+        IOrientation ChangeOrientation(char position);
     }
 }

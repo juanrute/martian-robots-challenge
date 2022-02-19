@@ -7,9 +7,14 @@ namespace Domain
 {
     public class Robot : IRobot
     {
+        public Robot(ISurface marsSurface)
+        {
+            this.Surface = marsSurface;
+        }
+
         public IGridCoordinate CoordinatePosition { get ; set ; }
         public IOrientation Position { get ; set ; }
-        public IMarsSurface Surface { get ; set ; }
+        public ISurface Surface { get ; set ; }
         public bool IsLost { get ; set ; }
 
         public void ExecuteCommand(string command)
@@ -17,14 +22,17 @@ namespace Domain
             foreach (var instruction in command) {
                 if (instruction.Equals('L'))
                 {
-                    this.Position = ChangeOrientation(Position.LeftPosition);
+                    Position = ChangeOrientation(Position.LeftPosition);
                 }
                 else if (instruction.Equals('R'))
                 {
-                    this.Position = ChangeOrientation(Position.RightPosition);
+                    Position = ChangeOrientation(Position.RightPosition);
                 }
                 else {
-                    var tempCoordinates = new GridCoordinate(CoordinatePosition.XPosition + Position.MoveForwardX, CoordinatePosition.YPosition + Position.MoveForwardY);
+                    var tempCoordinates = new GridCoordinate(
+                        CoordinatePosition.XPosition + Position.MoveForwardX, 
+                        CoordinatePosition.YPosition + Position.MoveForwardY
+                        );
                     if (!Surface.IsValidMovement(tempCoordinates))
                     {
                         IsLost = true;
