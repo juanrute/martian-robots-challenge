@@ -18,7 +18,8 @@ namespace ConsoleUI
             }
 
             IRobotProcessor processor = new RobotProcessor();
-            processor.ParseInput(inputCommand.ToArray());
+            processor.ParseInput(inputCommand);
+            processor.ExcecuteEachRobotCommand(inputCommand);
         }
     }
 }

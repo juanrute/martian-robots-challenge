@@ -9,10 +9,6 @@ namespace Domain
         public IGridCoordinate SuperiorLimit { get ; set ; }
         public IList<IGridCoordinate> Scent { get ; set ; } = new List<IGridCoordinate>();
 
-        public MarsSurface(IGridCoordinate coordinates)
-        {
-            SuperiorLimit = coordinates;
-        }
         public void AddScent(IGridCoordinate coordinate)
         {
             Scent.Add(coordinate);

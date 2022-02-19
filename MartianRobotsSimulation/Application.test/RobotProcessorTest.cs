@@ -1,0 +1,156 @@
+using NUnit.Framework;
+using System;
+using System.IO;
+using System.Linq;
+
+namespace Application.Test
+{
+    public class RobotProcessorTest
+    {
+        [SetUp]
+        public void Setup()
+        {
+        }
+
+        [Test]
+        public void IsCommandValid_WhenExampleInput_ExpectedCorrectOutput()
+        {
+            var testData = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestData\exampleInput.txt")
+                .Where(line => !string.IsNullOrWhiteSpace(line));
+            RobotProcessor processor = new RobotProcessor();
+            Assert.IsTrue(processor.IsCommandValid(testData.ToList()));
+            var result = processor.ExcecuteEachRobotCommand(testData.ToList());
+
+            //Output for 3 robots
+            Assert.AreEqual(3,result.Count);
+
+            Assert.AreEqual("1 1 E", result[0]);
+            Assert.AreEqual("3 3 N LOST", result[1]);
+            Assert.AreEqual("4 2 N", result[2]);
+        }
+
+        [Test]
+        public void IsCommandValid_WhenMiddleInput_ExpectedCorrectOutput()
+        {
+            var testData = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestData\middleInput.txt")
+                .Where(line => !string.IsNullOrWhiteSpace(line));
+            RobotProcessor processor = new RobotProcessor();
+            Assert.IsTrue(processor.IsCommandValid(testData.ToList()));
+            var result = processor.ExcecuteEachRobotCommand(testData.ToList());
+
+            //Output for 6 robots
+            Assert.AreEqual(6, result.Count);
+
+            //Robot 1: Starting from (0 0 N) and moving with the pattern FRFL 24 times
+            Assert.AreEqual("24 24 N", result[0]);
+
+            //Robot 2: Starting from (25 25 S) and moving with the pattern FRFL 24 times
+            Assert.AreEqual("1 1 S", result[1]);
+
+            //Robot 3: Starting from (10 10 N) and moving with the pattern FLFL 24 times ends up in the initial position
+            Assert.AreEqual("10 10 N", result[2]);
+
+            //Robot 4: Starting from (0 0 N) and moving with the pattern FRFL 24 times and one aditional F movement
+            Assert.AreEqual("24 25 N", result[3]);
+
+            //Robot 5: Starting from (25 25 S) and moving with the pattern F 25 times then R and F 25 times then R and F until lost
+            Assert.AreEqual("0 25 N LOST", result[4]);
+
+            //Robot 6: Starting from (0 0 S) and try to move forward
+            Assert.AreEqual("0 0 S LOST", result[5]);
+        }
+
+
+        [Test]
+        public void IsCommandValid_WhenLongInput_ExpectedCorrectOutput()
+        {
+            var testData = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestData\longInput.txt")
+                .Where(line => !string.IsNullOrWhiteSpace(line));
+            RobotProcessor processor = new RobotProcessor();
+            Assert.IsTrue(processor.IsCommandValid(testData.ToList()));
+            var result = processor.ExcecuteEachRobotCommand(testData.ToList());
+
+            //Output for 40 robots
+            Assert.AreEqual(48, result.Count);
+
+            //Robots [1-4]: Starting from (0 0 N) and moving forward 50 times then R and forward 49 times
+            Assert.AreEqual("49 50 E", result[0]);
+            Assert.AreEqual("49 50 E", result[1]);
+            Assert.AreEqual("49 50 E", result[2]);
+            Assert.AreEqual("49 50 E", result[3]);
+
+            //Robots [5-8]: Starting from (50 50 S) and moving forward 50 times then R and forward 49 times
+            Assert.AreEqual("1 0 W", result[4]);
+            Assert.AreEqual("1 0 W", result[5]);
+            Assert.AreEqual("1 0 W", result[6]);
+            Assert.AreEqual("1 0 W", result[7]);
+
+            Assert.AreEqual("25 25 N", result[8]);
+            Assert.AreEqual("25 25 N", result[9]);
+            Assert.AreEqual("25 25 N", result[10]);
+            Assert.AreEqual("25 25 N", result[11]);
+
+            Assert.AreEqual("24 24 S", result[12]);
+            Assert.AreEqual("24 24 S", result[13]);
+            Assert.AreEqual("24 24 S", result[14]);
+            Assert.AreEqual("24 24 S", result[15]);
+
+            Assert.AreEqual("50 50 E LOST", result[16]);
+            Assert.AreEqual("50 50 E LOST", result[17]);
+            Assert.AreEqual("50 50 E LOST", result[18]);
+            Assert.AreEqual("50 50 E LOST", result[19]);
+
+            //Robot [20-24]: Starting from (25 25 S) and moving with the pattern F 25 times then R and F 25 times then R and F until lost
+            Assert.AreEqual("0 45 N", result[20]);
+            Assert.AreEqual("0 45 N", result[21]);
+            Assert.AreEqual("0 45 N", result[22]);
+            Assert.AreEqual("0 45 N", result[23]);
+
+            //To make the test long, I sent the same commands to the next 24 robots
+            Assert.AreEqual("0 45 N", result[48]);
+        }
+
+        [Test]
+        public void IsCommandValid_WhenCorrectCommand_ExpectedTrue()
+        {
+            var testData = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestData\exampleInput.txt")
+                .Where(line => !string.IsNullOrWhiteSpace(line));
+            RobotProcessor processor = new RobotProcessor();
+            Assert.IsTrue(processor.IsCommandValid(testData.ToList()));
+
+        }
+
+        [Test]
+        public void IsCommandValid_WhenInvalidCommand_ExpectedArgumentExceptionInvalidInput()
+        {
+            var testData = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestData\wrongInput.txt")
+                .Where(line => !string.IsNullOrWhiteSpace(line));
+            RobotProcessor processor = new RobotProcessor();
+            var ex = Assert.Throws<ArgumentException>(() => processor.IsCommandValid(testData.ToList()));
+
+            Assert.That(ex.Message == "Invalid command.");
+        }
+
+        [Test]
+        public void IsCommandValid_WhenInvalidCommand_ExpectedArgumentExceptionInstructionLength()
+        {
+            var testData = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestData\wrongInputCommandLen.txt")
+                .Where(line => !string.IsNullOrWhiteSpace(line));
+            RobotProcessor processor = new RobotProcessor();
+            var ex = Assert.Throws<ArgumentException>(() => processor.IsCommandValid(testData.ToList()));
+
+            Assert.That(ex.Message == "Instructions length must be less or equals to 100.");
+        }
+
+        [Test]
+        public void IsCommandValid_WhenInvalidCommand_ExpectedArgumentExceptionCoordinateLength()
+        {
+            var testData = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestData\wrongInputCoordinateLen.txt")
+                .Where(line => !string.IsNullOrWhiteSpace(line));
+            RobotProcessor processor = new RobotProcessor();
+            var ex = Assert.Throws<ArgumentException>(() => processor.IsCommandValid(testData.ToList()));
+
+            Assert.That(ex.Message == "Coordinates length must be less or equals to 50.");
+        }
+    }
+}
