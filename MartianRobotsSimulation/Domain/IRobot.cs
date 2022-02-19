@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Domain
+﻿namespace Domain
 {
     public interface IRobot
     {
-        IPosition Position { get; set; }
-        IMarsSurface Surface { get; set; }
+        IGridCoordinate CoordinatePosition { get; set; }
+        IOrientation Position { get; set; }
+        ISurface Surface { get; set; }
+        bool IsLost { get; set; }
         void ExecuteCommand(string command);
+        void ChangeOrientation(char position);
+        void MoveForward();
     }
 }

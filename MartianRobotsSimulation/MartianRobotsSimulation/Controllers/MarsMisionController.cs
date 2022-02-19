@@ -32,7 +32,7 @@ namespace MartianRobotsSimulation.Controllers
         public void Post([FromBody] string[] inputCommand)
         {
             IRobotProcessor processor = new RobotProcessor();
-            processor.ParseInput(inputCommand.ToArray());
+            //processor.ParseInput(inputCommand.ToArray());
         }
 
         // PUT api/<MarsMisionController>/5

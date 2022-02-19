@@ -3,21 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30711.63
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MartianRobotsSimulation", "MartianRobotsSimulation\MartianRobotsSimulation.csproj", "{BB6B7E40-30F7-4E0D-8FC7-20CAB2908F3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MartianRobotsSimulation", "MartianRobotsSimulation\MartianRobotsSimulation.csproj", "{BB6B7E40-30F7-4E0D-8FC7-20CAB2908F3D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{247D6DAF-6E84-4A69-A0FF-BA609D82872C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{7A213ED1-7EDC-4703-B955-511A4B903EAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleUI", "ConsoleUI\ConsoleUI.csproj", "{1AF46902-E4E5-463F-B67B-2D1B87172148}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUI", "ConsoleUI\ConsoleUI.csproj", "{1AF46902-E4E5-463F-B67B-2D1B87172148}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "presentation-layer", "presentation-layer", "{B61D97F0-C065-4F23-819F-9587CA4E7B9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{8D673E3D-170E-44EF-BF24-F1034C482B4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{8D673E3D-170E-44EF-BF24-F1034C482B4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{3C8894AE-DE11-47EC-9DE6-FC3C625FFD60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{3C8894AE-DE11-47EC-9DE6-FC3C625FFD60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{0F88F9BB-52E7-4605-AEB4-9D0381F3D405}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{0F88F9BB-52E7-4605-AEB4-9D0381F3D405}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Test", "Application.test\Application.Test.csproj", "{1D7652FA-39FB-423A-B57F-80CDF55E3F16}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{0F88F9BB-52E7-4605-AEB4-9D0381F3D405}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F88F9BB-52E7-4605-AEB4-9D0381F3D405}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F88F9BB-52E7-4605-AEB4-9D0381F3D405}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D7652FA-39FB-423A-B57F-80CDF55E3F16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D7652FA-39FB-423A-B57F-80CDF55E3F16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D7652FA-39FB-423A-B57F-80CDF55E3F16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D7652FA-39FB-423A-B57F-80CDF55E3F16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,6 +62,7 @@ Global
 		{8D673E3D-170E-44EF-BF24-F1034C482B4E} = {247D6DAF-6E84-4A69-A0FF-BA609D82872C}
 		{3C8894AE-DE11-47EC-9DE6-FC3C625FFD60} = {247D6DAF-6E84-4A69-A0FF-BA609D82872C}
 		{0F88F9BB-52E7-4605-AEB4-9D0381F3D405} = {247D6DAF-6E84-4A69-A0FF-BA609D82872C}
+		{1D7652FA-39FB-423A-B57F-80CDF55E3F16} = {7A213ED1-7EDC-4703-B955-511A4B903EAD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4E89D814-818E-443F-BA0D-63B155E078B0}

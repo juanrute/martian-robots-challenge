@@ -1,4 +1,5 @@
 ﻿using Application;
+using Domain;
 using System;
 using System.Collections.Generic;
 
@@ -18,7 +19,9 @@ namespace ConsoleUI
             }
 
             IRobotProcessor processor = new RobotProcessor();
-            processor.ParseInput(inputCommand.ToArray());
+            processor.MarsSurface = new MarsSurface();
+            processor.IsCommandValid(inputCommand);
+            processor.ExcecuteEachRobotCommand(inputCommand);
         }
     }
 }

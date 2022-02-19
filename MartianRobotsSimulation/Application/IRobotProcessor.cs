@@ -1,15 +1,14 @@
 ﻿using Domain;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Application
 {
     public interface IRobotProcessor
     {
-        void ParseInput(string[] input);
-        IMarsSurface CreateSurface(int[] input);
-        bool IsCommandValid(string[] input);
+        bool IsCommandValid(List<string> input);
+        List<string> ExcecuteEachRobotCommand(IList<string> input);
+        public IRobot CurrentRobot { get; set; }
+        public ISurface MarsSurface { get; set; }
 
     }
 }
