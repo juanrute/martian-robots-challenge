@@ -1,4 +1,5 @@
 ﻿using Application;
+using Domain;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,15 @@ namespace MartianRobotsSimulation.Controllers
     [ApiController]
     public class MarsMisionController : ControllerBase
     {
+        public IRobotProcessor Processor { get; set; }
+        public ISurface MarsSurface { get; set; }
+        public MarsMisionController(IRobotProcessor _processor, ISurface _marsSurface)
+        {
+            Processor = _processor;
+            MarsSurface = _marsSurface;
+            Processor.MarsSurface = MarsSurface;
+        }
+
         // GET: api/<MarsMisionController>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -27,18 +37,33 @@ namespace MartianRobotsSimulation.Controllers
             return "value";
         }
 
-        // POST api/<MarsMisionController>
+        /// <summary>
+        /// Creates and execute a MarsMision then return the result.
+        /// </summary>
+        /// <param name="inputCommand"></param>
+        /// <returns>All the lines in the command</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /MarsMision
+        ///     [
+        ///         "5 3",
+        ///         "1 1 E",
+        ///         "RFRFRFRF",
+        ///         "3 2 N",
+        ///         "FRRFLLFFRRFLL",
+        ///         "0 3 W",
+        ///         "LLFFFRFLFL"
+        ///     ]
+        ///
+        /// </remarks>
+        /// <response code="200">Returns the final grid position and orientation of all robots.</response>
+        /// <response code="400">If the format is not correct</response>
         [HttpPost]
-        public void Post([FromBody] string[] inputCommand)
+        public List<string> Post([FromBody] string[] inputCommand)
         {
-            IRobotProcessor processor = new RobotProcessor();
-            //processor.ParseInput(inputCommand.ToArray());
-        }
-
-        // PUT api/<MarsMisionController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
+            Processor.IsCommandValid(inputCommand.ToList());
+            return Processor.ExcecuteEachRobotCommand(inputCommand.ToList());
         }
     }
 }
