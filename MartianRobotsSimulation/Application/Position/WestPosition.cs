@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Domain;
 
-namespace Domain.Position
+namespace Application.Position
 {
     class WestPosition : IOrientation
     {
         public char Direction { get => 'W'; }
 
-        public int MoveForwardX => -1;
+        public int MoveOnX => -1;
 
-        public int MoveForwardY => 0;
+        public int MoveOnY => 0;
 
         public char LeftPosition { get => 'S'; }
 

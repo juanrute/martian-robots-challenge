@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Domain
+﻿namespace Domain
 {
     public interface IRobot
     {
@@ -11,6 +7,7 @@ namespace Domain
         ISurface Surface { get; set; }
         bool IsLost { get; set; }
         void ExecuteCommand(string command);
-        IOrientation ChangeOrientation(char position);
+        void ChangeOrientation(char position);
+        void MoveForward();
     }
 }

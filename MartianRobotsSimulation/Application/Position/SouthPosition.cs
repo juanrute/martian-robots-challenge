@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Domain;
 
-namespace Domain.Position
+namespace Application.Position
 {
     class SouthPosition : IOrientation
     {
         public char Direction { get => 'S'; }
 
-        public int MoveForwardX => 0;
+        public int MoveOnX => 0;
 
-        public int MoveForwardY => -1;
+        public int MoveOnY => -1;
 
         public char LeftPosition { get => 'E'; }
 

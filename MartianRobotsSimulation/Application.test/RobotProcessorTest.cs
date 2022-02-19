@@ -1,4 +1,3 @@
-using Domain;
 using NUnit.Framework;
 using System;
 using System.IO;
@@ -31,6 +30,18 @@ namespace Application.Test
             Assert.AreEqual("1 1 E", result[0]);
             Assert.AreEqual("3 3 N LOST", result[1]);
             Assert.AreEqual("4 2 N", result[2]);
+        }
+
+        [Test]
+        public void IsCommandValid_WhenARobotLeftScent_ExpectedNextRobotSkipACommand()
+        {
+            var testData = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestData\scentsInput.txt")
+                .Where(line => !string.IsNullOrWhiteSpace(line));
+            Assert.IsTrue(processor.IsCommandValid(testData.ToList()));
+            var result = processor.ExcecuteEachRobotCommand(testData.ToList());
+
+            Assert.AreEqual("2 2 E LOST", result[0]);
+            Assert.AreEqual("2 1 S", result[1]);
         }
 
         [Test]
@@ -98,9 +109,10 @@ namespace Application.Test
             Assert.AreEqual("24 24 S", result[15]);
 
             Assert.AreEqual("50 50 E LOST", result[16]);
-            Assert.AreEqual("50 50 E LOST", result[17]);
-            Assert.AreEqual("50 50 E LOST", result[18]);
-            Assert.AreEqual("50 50 E LOST", result[19]);
+            //Because of the scent left by the last robot, the others does not fall
+            Assert.AreEqual("50 50 E", result[17]);
+            Assert.AreEqual("50 50 E", result[18]);
+            Assert.AreEqual("50 50 E", result[19]);
 
             //Robot [20-24]: Starting from (25 25 S) and moving with the pattern F 25 times then R and F 25 times then R and F until lost
             Assert.AreEqual("0 45 N", result[20]);

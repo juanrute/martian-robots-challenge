@@ -1,8 +1,6 @@
 ﻿using Domain;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Application
 {
@@ -69,7 +67,7 @@ namespace Application
         {
             CurrentRobot = new Robot(MarsSurface);
             CurrentRobot.CoordinatePosition = new GridCoordinate(Convert.ToInt32(line.Split(' ')[0]), Convert.ToInt32(line.Split(' ')[1]));
-            CurrentRobot.Position = CurrentRobot.ChangeOrientation(line.Split(' ')[2].ToCharArray()[0]);
+            CurrentRobot.ChangeOrientation(line.Split(' ')[2].ToCharArray()[0]);
         }
 
         private void CreateMarsSurface(string line)
