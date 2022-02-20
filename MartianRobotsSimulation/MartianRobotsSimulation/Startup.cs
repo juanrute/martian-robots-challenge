@@ -33,8 +33,8 @@ namespace MartianRobotsSimulation
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "ToDo API",
-                    Description = "An ASP.NET Core Web API for managing ToDo items",
+                    Title = "Martian Robot API",
+                    Description = "An ASP.NET Core Web API for controlling the mars mission",
                    
                 });
 
@@ -49,7 +49,7 @@ namespace MartianRobotsSimulation
         {
             app.UseSwagger();
             app.UseSwaggerUI(c=> {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json","Employee API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json","Robot API V1");
                 c.RoutePrefix = string.Empty;
             });
             if (env.IsDevelopment())
