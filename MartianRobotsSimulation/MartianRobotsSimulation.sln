@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30711.63
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MartianRobotsSimulation", "MartianRobotsSimulation\MartianRobotsSimulation.csproj", "{BB6B7E40-30F7-4E0D-8FC7-20CAB2908F3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MartianRobotsApi", "MartianRobotsSimulation\MartianRobotsApi.csproj", "{BB6B7E40-30F7-4E0D-8FC7-20CAB2908F3D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{247D6DAF-6E84-4A69-A0FF-BA609D82872C}"
 EndProject
@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{0F88F9BB-52E7-4605-AEB4-9D0381F3D405}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Test", "Application.test\Application.Test.csproj", "{1D7652FA-39FB-423A-B57F-80CDF55E3F16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.Test", "Application.test\Application.Test.csproj", "{1D7652FA-39FB-423A-B57F-80CDF55E3F16}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
