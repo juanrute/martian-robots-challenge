@@ -171,23 +171,23 @@ namespace Application.Test
 
 
         [Test]
-        public void ExcecuteEachRobotCommand_WhenInvalidCommand_ExpectedArgumentExceptionRobotInvalidCoordinates()
+        public void IsCommandValid_WhenInvalidCommand_ExpectedArgumentExceptionRobotInvalidCoordinates()
         {
             var testData = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestData\wrongInputRobotCoordinateLen.txt")
                 .Where(line => !string.IsNullOrWhiteSpace(line));
-            processor.IsCommandValid(testData.ToList());
+
             var ex = Assert.Throws<ArgumentException>(() => processor.ExcecuteEachRobotCommand(testData.ToList()));
 
             Assert.That(ex.Message == "Coordinates length must be less or equals to 50.");
         }
 
         [Test]
-        public void ExcecuteEachRobotCommand_WhenInvalidCommand_ExpectedArgumentExceptionRobotInvalidOrientation()
+        public void IsCommandValid_WhenInvalidCommand_ExpectedArgumentExceptionRobotInvalidOrientation()
         {
             var testData = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestData\wrongInputRobotOrientation.txt")
                 .Where(line => !string.IsNullOrWhiteSpace(line));
-            processor.IsCommandValid(testData.ToList());
-            var ex = Assert.Throws<ArgumentException>(() => processor.ExcecuteEachRobotCommand(testData.ToList()));
+
+            var ex = Assert.Throws<ArgumentException>(() => processor.IsCommandValid(testData.ToList()));
 
             Assert.That(ex.Message == "Invalid character for robot orientation.");
         }

@@ -40,6 +40,10 @@ namespace Application
             {
                 throw new ArgumentException("Invalid instructions character.");
             }
+            else if (!input.Where((item, index) => index % 2 != 0 && index != 0).ToList().TrueForAll(line => Regex.IsMatch(line.Split(' ')[2], RegularExpresionOrientation))) 
+            {
+                throw new ArgumentException("Invalid character for robot orientation.");
+            }
         }
 
         public List<string> ExcecuteEachRobotCommand(IList<string> input)
@@ -93,10 +97,10 @@ namespace Application
             {
                 throw new ArgumentException($"Coordinates length must be less or equals to {MaxCoodinateLength}.");
             }
-            if (!Regex.IsMatch(orientation, RegularExpresionOrientation))
-            {
-                throw new ArgumentException($"Invalid character for robot orientation.");
-            }
+            //if (!Regex.IsMatch(orientation, RegularExpresionOrientation))
+            //{
+            //    throw new ArgumentException($"Invalid character for robot orientation.");
+            //}
         }
     }
 }
