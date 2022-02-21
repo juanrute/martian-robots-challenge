@@ -1,11 +1,13 @@
-﻿namespace Domain
+﻿using System;
+
+namespace Domain
 {
     public class GridCoordinate : IGridCoordinate
     {
-        public GridCoordinate(int x, int y)
+        public GridCoordinate(string line)
         {
-            XPosition = x;
-            YPosition = y;
+            XPosition = Convert.ToInt32(line.Split(' ')[0]);
+            YPosition = Convert.ToInt32(line.Split(' ')[1]);
         }
 
         public int XPosition { get ; set ; }

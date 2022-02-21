@@ -29,6 +29,15 @@
     <None Update="TestData\middleInput.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="TestData\wrongInstructionsInput.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\wrongInputRobotOrientation.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\wrongInputRobotCoordinateLen.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TestData\wrongInputCoordinateLen.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

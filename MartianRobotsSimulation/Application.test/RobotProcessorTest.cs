@@ -17,11 +17,10 @@ namespace Application.Test
         }
 
         [Test]
-        public void IsCommandValid_WhenExampleInput_ExpectedCorrectOutput()
+        public void ExcecuteEachRobotCommand_WhenExampleInput_ExpectedCorrectOutput()
         {
             var testData = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestData\exampleInput.txt")
                 .Where(line => !string.IsNullOrWhiteSpace(line));
-            Assert.IsTrue(processor.IsCommandValid(testData.ToList()));
             var result = processor.ExcecuteEachRobotCommand(testData.ToList());
 
             //Output for 3 robots
@@ -33,11 +32,10 @@ namespace Application.Test
         }
 
         [Test]
-        public void IsCommandValid_WhenARobotLeftScent_ExpectedNextRobotSkipACommand()
+        public void ExcecuteEachRobotCommand_WhenARobotLeftScent_ExpectedNextRobotSkipACommand()
         {
             var testData = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestData\scentsInput.txt")
                 .Where(line => !string.IsNullOrWhiteSpace(line));
-            Assert.IsTrue(processor.IsCommandValid(testData.ToList()));
             var result = processor.ExcecuteEachRobotCommand(testData.ToList());
 
             Assert.AreEqual("2 2 E LOST", result[0]);
@@ -45,11 +43,10 @@ namespace Application.Test
         }
 
         [Test]
-        public void IsCommandValid_WhenMiddleInput_ExpectedCorrectOutput()
+        public void ExcecuteEachRobotCommand_WhenMiddleInput_ExpectedCorrectOutput()
         {
             var testData = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestData\middleInput.txt")
                 .Where(line => !string.IsNullOrWhiteSpace(line));
-            Assert.IsTrue(processor.IsCommandValid(testData.ToList()));
             var result = processor.ExcecuteEachRobotCommand(testData.ToList());
 
             //Output for 6 robots
@@ -76,11 +73,10 @@ namespace Application.Test
 
 
         [Test]
-        public void IsCommandValid_WhenLongInput_ExpectedCorrectOutput()
+        public void ExcecuteEachRobotCommand_WhenLongInput_ExpectedCorrectOutput()
         {
             var testData = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestData\longInput.txt")
                 .Where(line => !string.IsNullOrWhiteSpace(line));
-            Assert.IsTrue(processor.IsCommandValid(testData.ToList()));
             var result = processor.ExcecuteEachRobotCommand(testData.ToList());
 
             //Output for 40 robots
@@ -129,7 +125,7 @@ namespace Application.Test
         {
             var testData = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestData\exampleInput.txt")
                 .Where(line => !string.IsNullOrWhiteSpace(line));
-            Assert.IsTrue(processor.IsCommandValid(testData.ToList()));
+            processor.IsCommandValid(testData.ToList());
 
         }
 
@@ -161,6 +157,39 @@ namespace Application.Test
             var ex = Assert.Throws<ArgumentException>(() => processor.IsCommandValid(testData.ToList()));
 
             Assert.That(ex.Message == "Coordinates length must be less or equals to 50.");
+        }
+
+        [Test]
+        public void IsCommandValid_WhenInvalidCommand_ExpectedArgumentExceptionInstructionCharacter()
+        {
+            var testData = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestData\wrongInstructionsInput.txt")
+                .Where(line => !string.IsNullOrWhiteSpace(line));
+            var ex = Assert.Throws<ArgumentException>(() => processor.IsCommandValid(testData.ToList()));
+
+            Assert.That(ex.Message == "Invalid instructions character.");
+        }
+
+
+        [Test]
+        public void ExcecuteEachRobotCommand_WhenInvalidCommand_ExpectedArgumentExceptionRobotInvalidCoordinates()
+        {
+            var testData = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestData\wrongInputRobotCoordinateLen.txt")
+                .Where(line => !string.IsNullOrWhiteSpace(line));
+            processor.IsCommandValid(testData.ToList());
+            var ex = Assert.Throws<ArgumentException>(() => processor.ExcecuteEachRobotCommand(testData.ToList()));
+
+            Assert.That(ex.Message == "Coordinates length must be less or equals to 50.");
+        }
+
+        [Test]
+        public void ExcecuteEachRobotCommand_WhenInvalidCommand_ExpectedArgumentExceptionRobotInvalidOrientation()
+        {
+            var testData = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestData\wrongInputRobotOrientation.txt")
+                .Where(line => !string.IsNullOrWhiteSpace(line));
+            processor.IsCommandValid(testData.ToList());
+            var ex = Assert.Throws<ArgumentException>(() => processor.ExcecuteEachRobotCommand(testData.ToList()));
+
+            Assert.That(ex.Message == "Invalid character for robot orientation.");
         }
     }
 }
