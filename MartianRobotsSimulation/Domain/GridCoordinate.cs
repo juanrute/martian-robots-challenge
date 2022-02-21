@@ -10,6 +10,12 @@ namespace Domain
             YPosition = Convert.ToInt32(line.Split(' ')[1]);
         }
 
+        public GridCoordinate(int x, int y)
+        {
+            XPosition = x;
+            YPosition = y;
+        }
+
         public int XPosition { get ; set ; }
         public int YPosition { get ; set ; }
     }
