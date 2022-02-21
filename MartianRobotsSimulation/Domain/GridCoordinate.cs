@@ -18,5 +18,11 @@ namespace Domain
 
         public int XPosition { get ; set ; }
         public int YPosition { get ; set ; }
+
+
+        public override bool Equals(Object point)
+        {
+            return XPosition == ((IGridCoordinate)point).XPosition && YPosition == ((IGridCoordinate)point).YPosition;
+        }
     }
 }

@@ -81,8 +81,10 @@ namespace Application
             string orientation;
             ValidateCreateRobotInstruction(line, out coordinates, out orientation);
 
-            CurrentRobot = new Robot(MarsSurface);
-            CurrentRobot.CoordinatePosition = coordinates;
+            CurrentRobot = new Robot() {
+                Surface = MarsSurface,
+                CoordinatePosition = coordinates
+            };
             CurrentRobot.ChangeOrientation(orientation[0]);
         }
 
@@ -97,10 +99,6 @@ namespace Application
             {
                 throw new ArgumentException($"Coordinates length must be less or equals to {MaxCoodinateLength}.");
             }
-            //if (!Regex.IsMatch(orientation, RegularExpresionOrientation))
-            //{
-            //    throw new ArgumentException($"Invalid character for robot orientation.");
-            //}
         }
     }
 }

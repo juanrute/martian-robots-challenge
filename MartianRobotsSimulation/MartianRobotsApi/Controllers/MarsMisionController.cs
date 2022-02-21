@@ -25,7 +25,7 @@ namespace MartianRobotsSimulation.Controllers
 
         // GET: api/<MarsMisionController>
         [HttpGet]
-        public IEnumerable<IGridCoordinate> Get()
+        public IEnumerable<IScent> Get()
         {   //For testing
             //Processor.ExcecuteEachRobotCommand(new List<string> { "5 3", "3 2 N", "FRRFLLFFRRFLL" });
             return Processor.MarsSurface.Scent;
