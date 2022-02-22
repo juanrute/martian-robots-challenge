@@ -1,5 +1,6 @@
 using Application;
 using Domain;
+using Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -28,6 +29,9 @@ namespace MartianRobotsSimulation
             services.AddScoped<IRobotProcessor, RobotProcessor>();
             services.AddScoped<ISurface,MarsSurface>();
             services.AddControllers();
+
+            Injectcion.RegisterInfrastructerServices(services, Configuration);  
+
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo

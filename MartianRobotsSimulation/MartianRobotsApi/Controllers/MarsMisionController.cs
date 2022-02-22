@@ -1,5 +1,6 @@
 ﻿using Application;
 using Domain;
+using Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,20 +15,22 @@ namespace MartianRobotsSimulation.Controllers
     [ApiController]
     public class MarsMisionController : ControllerBase
     {
+        private readonly MisionDbContext dbContext;
         public IRobotProcessor Processor { get; set; }
         public ISurface MarsSurface { get; set; }
-        public MarsMisionController(IRobotProcessor _processor, ISurface _marsSurface)
+        public MarsMisionController(IRobotProcessor _processor, ISurface _marsSurface, MisionDbContext _dbContext)
         {
             Processor = _processor;
             MarsSurface = _marsSurface;
             Processor.MarsSurface = MarsSurface;
+            dbContext = _dbContext;
         }
 
         // GET: api/<MarsMisionController>
         [HttpGet]
         public IEnumerable<IScent> Get()
-        {   //For testing
-            //Processor.ExcecuteEachRobotCommand(new List<string> { "5 3", "3 2 N", "FRRFLLFFRRFLL" });
+        {
+            var temp = dbContext.Mision.ToArray();
             return Processor.MarsSurface.Scent;
         }
 
@@ -64,7 +67,22 @@ namespace MartianRobotsSimulation.Controllers
         public List<string> Post([FromBody] string[] inputCommand)
         {
             Processor.IsCommandValid(inputCommand.ToList());
-            return Processor.ExcecuteEachRobotCommand(inputCommand.ToList());
+            var response = Processor.ExcecuteEachRobotCommand(inputCommand.ToList());
+
+            var mision = new MisionModel()
+            {
+                RobotsQuantity = response.Count,
+                Surface = Processor.MarsSurface.ToString()
+            };
+            //response.ForEach(res=>mision.RobotsResult.Add(new RobotOutputModel() { 
+            //    IsLost = res.
+            //}));
+            //mision.RobotsCommands.Add(new RobotCommadModel() { 
+            //    Instructions
+            //});
+            dbContext.Mision.Add(mision);
+            dbContext.SaveChanges();
+            return response;
         }
     }
 }
