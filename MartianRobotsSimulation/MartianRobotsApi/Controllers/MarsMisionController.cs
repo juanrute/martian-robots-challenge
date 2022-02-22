@@ -1,5 +1,7 @@
 ﻿using Application;
+using AutoMapper;
 using Domain;
+using Domain.Models;
 using Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,22 +17,26 @@ namespace MartianRobotsSimulation.Controllers
     [ApiController]
     public class MarsMisionController : ControllerBase
     {
-        private readonly MisionDbContext dbContext;
+        private IMisionRepository repository;
+
+        private readonly IMapper mapper;
         public IRobotProcessor Processor { get; set; }
         public ISurface MarsSurface { get; set; }
-        public MarsMisionController(IRobotProcessor _processor, ISurface _marsSurface, MisionDbContext _dbContext)
+        public MarsMisionController(IRobotProcessor _processor, ISurface _marsSurface, IMisionRepository _repository, IMapper _mapper)
         {
             Processor = _processor;
             MarsSurface = _marsSurface;
             Processor.MarsSurface = MarsSurface;
-            dbContext = _dbContext;
+            repository = _repository;
+            mapper = _mapper;
         }
 
         // GET: api/<MarsMisionController>
         [HttpGet]
         public IEnumerable<IScent> Get()
         {
-            var temp = dbContext.Mision.ToArray();
+            var temp = repository.GetLastMision();
+            var temp2 = repository.GetAllMisions();
             return Processor.MarsSurface.Scent;
         }
 
@@ -68,21 +74,9 @@ namespace MartianRobotsSimulation.Controllers
         {
             Processor.IsCommandValid(inputCommand.ToList());
             var response = Processor.ExcecuteEachRobotCommand(inputCommand.ToList());
+            repository.Add(mapper.Map<MisionModel>(response));
 
-            var mision = new MisionModel()
-            {
-                RobotsQuantity = response.Count,
-                Surface = Processor.MarsSurface.ToString()
-            };
-            //response.ForEach(res=>mision.RobotsResult.Add(new RobotOutputModel() { 
-            //    IsLost = res.
-            //}));
-            //mision.RobotsCommands.Add(new RobotCommadModel() { 
-            //    Instructions
-            //});
-            dbContext.Mision.Add(mision);
-            dbContext.SaveChanges();
-            return response;
+            return response.Select(res=> res.FinalRobotPosition).ToList();
         }
     }
 }

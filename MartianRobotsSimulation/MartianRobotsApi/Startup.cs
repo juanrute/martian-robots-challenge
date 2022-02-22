@@ -30,7 +30,8 @@ namespace MartianRobotsSimulation
             services.AddScoped<ISurface,MarsSurface>();
             services.AddControllers();
 
-            Injectcion.RegisterInfrastructerServices(services, Configuration);  
+            Infrastructure.Injectcion.RegisterInfrastructerServices(services, Configuration);
+            Application.Injectcion.RegisterApplicationServices(services);
 
             services.AddSwaggerGen(options =>
             {

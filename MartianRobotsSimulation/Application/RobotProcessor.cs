@@ -46,33 +46,36 @@ namespace Application
             }
         }
 
-        public List<string> ExcecuteEachRobotCommand(IList<string> input)
+        public List<MisionResultViewModel> ExcecuteEachRobotCommand(IList<string> input)
         {
-            var result = new List<string>();
+            var misionResult = new List<MisionResultViewModel>();
             int index = 0;
             foreach (var line in input)
             {
+                var currentResult = new MisionResultViewModel();
                 if (index == 0)
                 {
                     MarsSurface.SuperiorLimit = new GridCoordinate(line);
                 }
                 else if (index %2 != 0)
                 {
+                    currentResult.InitialRobotPosition = line;
                     CreateCurrentRobot(line);
                 }
                 else if (index % 2 == 0)
                 {
-                    GetResultExecution(result, line);
+                    currentResult.FinalRobotPosition = GetResultExecution(line);
+                    misionResult.Add(currentResult);                         
                 }
                 index++;
             }
-            return result;
+            return misionResult;
         }
 
-        private void GetResultExecution(List<string> result, string line)
+        private string GetResultExecution(string line)
         {
             CurrentRobot.ExecuteCommand(line);
-            result.Add(CurrentRobot.ToString());
+            return CurrentRobot.ToString();
         }
 
         private void CreateCurrentRobot(string line)

@@ -21,7 +21,7 @@ namespace Application.Test
         {
             var testData = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestData\exampleInput.txt")
                 .Where(line => !string.IsNullOrWhiteSpace(line));
-            var result = processor.ExcecuteEachRobotCommand(testData.ToList());
+            var result = processor.ExcecuteEachRobotCommand(testData.ToList()).Select(res => res.FinalRobotPosition).ToList();
 
             //Output for 3 robots
             Assert.AreEqual(3,result.Count);
@@ -36,7 +36,7 @@ namespace Application.Test
         {
             var testData = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestData\scentsInput.txt")
                 .Where(line => !string.IsNullOrWhiteSpace(line));
-            var result = processor.ExcecuteEachRobotCommand(testData.ToList());
+            var result = processor.ExcecuteEachRobotCommand(testData.ToList()).Select(res => res.FinalRobotPosition).ToList();
 
             Assert.AreEqual("2 2 E LOST", result[0]);
             Assert.AreEqual("2 1 S", result[1]);
@@ -47,8 +47,8 @@ namespace Application.Test
         {
             var testData = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestData\middleInput.txt")
                 .Where(line => !string.IsNullOrWhiteSpace(line));
-            var result = processor.ExcecuteEachRobotCommand(testData.ToList());
-
+            var result = processor.ExcecuteEachRobotCommand(testData.ToList()).Select(res => res.FinalRobotPosition).ToList();
+            
             //Output for 6 robots
             Assert.AreEqual(6, result.Count);
 
@@ -77,7 +77,7 @@ namespace Application.Test
         {
             var testData = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestData\longInput.txt")
                 .Where(line => !string.IsNullOrWhiteSpace(line));
-            var result = processor.ExcecuteEachRobotCommand(testData.ToList());
+            var result = processor.ExcecuteEachRobotCommand(testData.ToList()).Select(res => res.FinalRobotPosition).ToList();
 
             //Output for 40 robots
             Assert.AreEqual(48, result.Count);

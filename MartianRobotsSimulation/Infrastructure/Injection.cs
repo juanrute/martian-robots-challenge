@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-
+using Domain;
 
 namespace Infrastructure
 {
@@ -15,7 +15,7 @@ namespace Infrastructure
                 options =>
                     options.UseSqlite(
                         configuration.GetConnectionString("MisionDb")));
-
+            service.AddTransient<IMisionRepository, MisionRepository>();
             return service;
         }
     }
