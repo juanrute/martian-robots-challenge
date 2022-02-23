@@ -66,14 +66,19 @@ namespace Application
                 }
                 else if (index % 2 == 0)
                 {
-                    FinalResult.Add(new MisionResultViewModel
-                    {
-                        FinalRobotPosition = GetResultExecution(line),
-                        InitialRobotPosition = input[index - 1]
-                    }); ;                         
+                    ExecuteComand(input, index, line);
                 }
                 index++;
             }
+        }
+
+        private void ExecuteComand(IList<string> input, int index, string line)
+        {
+            FinalResult.Add(new MisionResultViewModel
+            {
+                FinalRobotPosition = GetResultExecution(line),
+                InitialRobotPosition = input[index - 1]
+            });
         }
 
         private string GetResultExecution(string line)
