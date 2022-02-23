@@ -1,7 +1,16 @@
 # martian-robots-challenge
 Software for the Mars mission. It process basic commands like R L F and without a limit in robots to send. At fisrt there are several validacions.
 A picture is worth a thousand words:
+
+![](api.gif)
+
+
+![Alt Text](api.gif)
+
 ![](Documentation\api.gif)
+
+![Alt Text](Documentation\api.gif)
+
 This solution was made with .NetCore 3.1 with a domain driven architecture.
 Also use the following NuGet packages:
 
