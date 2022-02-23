@@ -1,5 +1,5 @@
 # martian-robots-challenge
-Software for the Mars mission. It processes basic commands like R L F and without a limit in robots to send. At first there are several validations.
+Software for the Mars mission. It processes basic commands like R L F , positioning the robot in the target point and without a limit in robots to send. At first, there are several validations then it will process the instructions for each robot, scents help to do not lose robots at the same coordinates.
 
 This solution was made with .NetCore 3.1 with a domain-driven architecture.
 Also, use the following NuGet packages:
@@ -10,7 +10,7 @@ Also, use the following NuGet packages:
 | EntityFrameworkCore | For accessing & storing the data in the SQLite database. |
 | Swagger | To create the WebApi documentation. | 
 | AutoMapper | To map multiple objects easily. |
-| Newtonsoft | Json Serialization |
+| Newtonsoft | Json Serialization. To return JSON objects without having to have many tables. This would change if necessary for now we have just one database table |
 
 A picture is worth a thousand words (But better with a gif):
 
