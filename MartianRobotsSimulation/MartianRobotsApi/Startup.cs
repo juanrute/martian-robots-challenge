@@ -1,16 +1,14 @@
+using System;
+using System.IO;
 using Application;
-using Domain;
-using Infrastructure;
+using System.Reflection;
+using Domain.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore;
-using System;
-using System.IO;
-using System.Reflection;
 
 namespace MartianRobotsSimulation
 {

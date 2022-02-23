@@ -1,15 +1,10 @@
 ﻿using Application;
 using AutoMapper;
-using Domain;
-using Domain.Models;
-using Infrastructure;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using Domain.Models;
+using Domain.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace MartianRobotsSimulation.Controllers
 {
@@ -31,20 +26,24 @@ namespace MartianRobotsSimulation.Controllers
             mapper = _mapper;
         }
 
-        // GET: api/<MarsMisionController>
+        /// <summary>
+        /// Return all the mision since the beginning of time.
+        /// </summary>
         [HttpGet]
-        public IEnumerable<IScent> Get()
+        public IEnumerable<MisionModel> Get()
         {
-            var temp = repository.GetLastMision();
-            var temp2 = repository.GetAllMisions();
-            return Processor.MarsSurface.Scent;
+            return repository.GetAllMisions();
         }
 
-        // GET api/<MarsMisionController>/5
+        /// <summary>
+        /// Get a MarsMision by id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>The mision with this id</returns>
         [HttpGet("{id}")]
-        public string Get(int id)
+        public MisionModel Get(int id)
         {
-            return "value";
+            return repository.GetById(id);
         }
 
         /// <summary>

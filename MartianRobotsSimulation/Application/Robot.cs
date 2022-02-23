@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.Interfaces;
 using System.Linq;
 
 namespace Application

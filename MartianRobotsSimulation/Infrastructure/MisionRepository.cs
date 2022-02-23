@@ -1,4 +1,4 @@
-﻿using Domain;
+﻿using Domain.Interfaces;
 using Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +16,11 @@ namespace Infrastructure
         {
             dbContext.Mision.Add(misionModel);
             dbContext.SaveChanges();
+        }
+
+        public MisionModel GetById(int id)
+        {
+            return dbContext.Mision.Find(id);
         }
 
         public MisionModel GetLastMision()

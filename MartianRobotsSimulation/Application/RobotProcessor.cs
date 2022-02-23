@@ -1,7 +1,8 @@
 ﻿using Domain;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using Domain.Interfaces;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace Application
@@ -36,11 +37,13 @@ namespace Application
             {
                 throw new ArgumentException($"Instructions length must be less or equals to {MaxInstructionLength}.");
             }
-            else if (!input.Where((item, index) => index % 2 == 0 && index != 0).ToList().TrueForAll(line => Regex.IsMatch(line, RegularExpresionInstructions)))
+            else if (!input.Where((item, index) => index % 2 == 0 && index != 0).ToList()
+                .TrueForAll(line => Regex.IsMatch(line, RegularExpresionInstructions)))
             {
                 throw new ArgumentException("Invalid instructions character.");
             }
-            else if (!input.Where((item, index) => index % 2 != 0 && index != 0).ToList().TrueForAll(line => Regex.IsMatch(line.Split(' ')[2], RegularExpresionOrientation))) 
+            else if (!input.Where((item, index) => index % 2 != 0 && index != 0).ToList()
+                .TrueForAll(line => Regex.IsMatch(line.Split(' ')[2], RegularExpresionOrientation))) 
             {
                 throw new ArgumentException("Invalid character for robot orientation.");
             }
@@ -48,7 +51,7 @@ namespace Application
 
         public List<MisionResultViewModel> ExcecuteEachRobotCommand(IList<string> input)
         {
-            var misionResult = new List<MisionResultViewModel>();
+            var misionsResults = new List<MisionResultViewModel>();
             int index = 0;
             foreach (var line in input)
             {
@@ -59,17 +62,17 @@ namespace Application
                 }
                 else if (index %2 != 0)
                 {
-                    currentResult.InitialRobotPosition = line;
+                    currentResult.InitialRobotPosition = line.Trim();
                     CreateCurrentRobot(line);
                 }
                 else if (index % 2 == 0)
                 {
                     currentResult.FinalRobotPosition = GetResultExecution(line);
-                    misionResult.Add(currentResult);                         
+                    misionsResults.Add(currentResult);                         
                 }
                 index++;
             }
-            return misionResult;
+            return misionsResults;
         }
 
         private string GetResultExecution(string line)

@@ -1,5 +1,6 @@
-﻿using Application.Position;
-using Domain;
+﻿using Domain;
+using Application.Position;
+using Domain.Interfaces;
 using System.Collections.Generic;
 
 namespace Application
