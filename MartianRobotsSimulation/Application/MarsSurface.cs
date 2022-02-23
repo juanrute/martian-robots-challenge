@@ -1,5 +1,6 @@
-﻿using Application.Position;
-using Domain;
+﻿using Domain;
+using Application.Position;
+using Domain.Interfaces;
 using System.Collections.Generic;
 
 namespace Application
@@ -7,15 +8,18 @@ namespace Application
     public class MarsSurface : ISurface
     {
         public IGridCoordinate SuperiorLimit { get ; set ; }
-        public IList<IGridCoordinate> Scent { get ; set ; } = new List<IGridCoordinate>();
+        public IList<IScent> Scent { get ; set ; } = new List<IScent>();
         public IOrientation SouthPosition { get; set; } = new SouthPosition();
         public IOrientation NorthPosition { get; set; } = new NorthPosition();
         public IOrientation EastPosition { get; set; } = new EastPosition();
         public IOrientation WestPosition { get ; set ; } = new WestPosition();
 
-        public void AddScent(IGridCoordinate coordinate)
+        public void AddScent(IGridCoordinate coordinate, char position)
         {
-            Scent.Add(coordinate);
+            Scent.Add(new Scent { 
+                Coordinate = coordinate,
+                Position = position
+            });
         }
 
         public bool IsValidMovement(IGridCoordinate coordinate)
@@ -25,10 +29,15 @@ namespace Application
                 || coordinate.YPosition < 0
                 || coordinate.XPosition < 0)
             {
-                AddScent(coordinate);
                 return false;
             }
             return true;
+        }
+
+
+        public override string ToString()
+        {
+            return $"{SuperiorLimit.XPosition} {SuperiorLimit.YPosition}";
         }
     }
 }

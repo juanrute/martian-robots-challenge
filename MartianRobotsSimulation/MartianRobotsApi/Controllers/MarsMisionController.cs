@@ -1,12 +1,10 @@
 ﻿using Application;
-using Domain;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
+using AutoMapper;
 using System.Linq;
-using System.Threading.Tasks;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using Domain.Models;
+using Domain.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace MartianRobotsSimulation.Controllers
 {
@@ -14,28 +12,41 @@ namespace MartianRobotsSimulation.Controllers
     [ApiController]
     public class MarsMisionController : ControllerBase
     {
+        private IMisionRepository MisionRepository;
+
+        private readonly IMapper Mapper;
         public IRobotProcessor Processor { get; set; }
         public ISurface MarsSurface { get; set; }
-        public MarsMisionController(IRobotProcessor _processor, ISurface _marsSurface)
+        public MarsMisionController(IRobotProcessor _processor, ISurface _marsSurface, IMisionRepository _repository, IMapper _mapper)
         {
             Processor = _processor;
             MarsSurface = _marsSurface;
             Processor.MarsSurface = MarsSurface;
+            MisionRepository = _repository;
+            Mapper = _mapper;
         }
 
-        // GET: api/<MarsMisionController>
+        /// <summary>
+        /// Return all the mision since the beginning of time.
+        /// </summary>
+        /// <returns>Al the mision</returns>
+        /// <response code="200">Returns a list with all mision. Recomendation deserialize to json the values of robotsInputs,robotsResult and scents.</response>
         [HttpGet]
-        public IEnumerable<IGridCoordinate> Get()
-        {   //For testing
-            //Processor.ExcecuteEachRobotCommand(new List<string> { "5 3", "3 2 N", "FRRFLLFFRRFLL" });
-            return Processor.MarsSurface.Scent;
+        public IEnumerable<MisionModel> Get()
+        {
+            return MisionRepository.GetAllMisions();
         }
 
-        // GET api/<MarsMisionController>/5
+        /// <summary>
+        /// Get a MarsMision by id.
+        /// </summary>
+        /// <param name="id">Mision Identificator</param>
+        /// <returns>The mision with this id</returns>
+        /// <response code="200">Returns a mision model. Recomendation deserialize to json the values of robotsInputs,robotsResult and scents.</response>
         [HttpGet("{id}")]
-        public string Get(int id)
+        public MisionModel Get(int id)
         {
-            return "value";
+            return MisionRepository.GetById(id);
         }
 
         /// <summary>
@@ -64,7 +75,11 @@ namespace MartianRobotsSimulation.Controllers
         public List<string> Post([FromBody] string[] inputCommand)
         {
             Processor.IsCommandValid(inputCommand.ToList());
-            return Processor.ExcecuteEachRobotCommand(inputCommand.ToList());
+            Processor.ExcecuteEachRobotCommand(inputCommand.ToList());
+
+            MisionRepository.Add(Mapper.Map<MisionModel>(Processor));
+
+            return Processor.GetSimplifiedResult();
         }
     }
 }

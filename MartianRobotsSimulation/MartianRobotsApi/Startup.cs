@@ -1,15 +1,14 @@
+using System;
+using System.IO;
 using Application;
-using Domain;
+using System.Reflection;
+using Domain.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore;
-using System;
-using System.IO;
-using System.Reflection;
 
 namespace MartianRobotsSimulation
 {
@@ -28,6 +27,10 @@ namespace MartianRobotsSimulation
             services.AddScoped<IRobotProcessor, RobotProcessor>();
             services.AddScoped<ISurface,MarsSurface>();
             services.AddControllers();
+
+            Infrastructure.Injectcion.RegisterInfrastructerServices(services, Configuration);
+            Application.Injectcion.RegisterApplicationServices(services);
+
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo

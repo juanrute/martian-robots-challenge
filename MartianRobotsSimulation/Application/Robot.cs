@@ -1,15 +1,11 @@
 ﻿using Domain;
+using Domain.Interfaces;
 using System.Linq;
 
 namespace Application
 {
     public class Robot : IRobot
     {
-        public Robot(ISurface marsSurface)
-        {
-            Surface = marsSurface;
-        }
-
         public IGridCoordinate CoordinatePosition { get ; set ; }
         public IOrientation Position { get ; set ; }
         public ISurface Surface { get ; set ; }
@@ -35,14 +31,16 @@ namespace Application
 
         public void MoveForward()
         {
-            GridCoordinate tempCoordinates = new GridCoordinate(
-                            CoordinatePosition.XPosition + Position.MoveOnX,
-                            CoordinatePosition.YPosition + Position.MoveOnY
-                        );
-            if (!Surface.Scent.Any(s => s.XPosition == tempCoordinates.XPosition && s.YPosition == tempCoordinates.YPosition))
+            if (!Surface.Scent.Any(pointScent => pointScent.Position == Position.Direction && pointScent.Coordinate.Equals(CoordinatePosition)))
             {
+                GridCoordinate tempCoordinates = new GridCoordinate(
+                                CoordinatePosition.XPosition + Position.MoveOnX,
+                                CoordinatePosition.YPosition + Position.MoveOnY
+                            );
+
                 if (!Surface.IsValidMovement(tempCoordinates))
                 {
+                    Surface.AddScent(CoordinatePosition,Position.Direction);
                     IsLost = true;
                 }
                 else
