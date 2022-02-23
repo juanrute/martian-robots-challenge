@@ -1,5 +1,5 @@
 # martian-robots-challenge
-Software for the Mars mission. It processes basic commands like R L F and without a limit in robots to send. At fisrt there are several validacions.
+Software for the Mars mission. It processes basic commands like R L F and without a limit in robots to send. At first there are several validations.
 
 This solution was made with .NetCore 3.1 with a domain-driven architecture.
 Also, use the following NuGet packages:
@@ -16,18 +16,23 @@ A picture is worth a thousand words (But better with a gif):
 
 WebAPi:
 ![Alt Text](api.gif)
+As you can see in the index you can find the information and examples of how to execute the Api.
+Through the API you can access the information stored in a SQLite database.
 
 Test Project:
 ![Alt Text](test.gif)
-
-The solution contains 6 projects:
-- Application
-- ConsoleUI
-- Domain
-- Infrastructure
-- MartialRobotApi
-- Application.Test
+You can find files with some possible scenarios in a mars mission for instance wrong input commands, length of the parameters, invalid characters as well as examples for successful missions.
 
 The project Test for the core logic using Nunit, you can find all the test cases in this project that includes the happy path, interesting path and exceptional path. In the folder TestData I have prepared some files with a set of instructions with different examples 
+exampleInput.txt contains
 
-For the persistence layer, I use Entity framework for SQLite with the Code-First approach.
+The solution contains 5 projects:
+
+| Project | Description |
+| :---: | :---: | 
+| Application | All the business logic the main method is RobotProcessor. |
+| Domain | All the Interfaces, classes and model needed for all the software| 
+| Infrastructure | Contain the database access. For the persistence layer I use Entity framework for SQLite with the Code-First approach. |  
+| MartialRobotApi | Through the API you can access the information stored in a SQLite database, it is well documented as well | 
+| Application.Test | Unit test for all the public methods in the Application Layer |  
+
