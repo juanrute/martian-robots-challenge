@@ -82,7 +82,7 @@ namespace Application.Test
             processor.ExcecuteEachRobotCommand(testData.ToList());
             var result = processor.GetSimplifiedResult();
 
-            //Output for 40 robots
+            //Output for 48 robots
             Assert.AreEqual(48, result.Count);
 
             //Robots [1-4]: Starting from (0 0 N) and moving forward 50 times then R and forward 49 times
