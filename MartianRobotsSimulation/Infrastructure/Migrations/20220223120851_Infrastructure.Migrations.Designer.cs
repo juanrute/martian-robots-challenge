@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(MisionDbContext))]
-    [Migration("20220222162146_Infrastructure.Migrations")]
+    [Migration("20220223120851_Infrastructure.Migrations")]
     partial class InfrastructureMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("DateCreated")
+                    b.Property<DateTime>("ExecutionDateTime")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("RobotsInputs")
@@ -34,6 +34,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("RobotsResult")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Scents")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Surface")

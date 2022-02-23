@@ -22,7 +22,7 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("DateCreated")
+                    b.Property<DateTime>("ExecutionDateTime")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("RobotsInputs")
@@ -32,6 +32,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("RobotsResult")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Scents")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Surface")

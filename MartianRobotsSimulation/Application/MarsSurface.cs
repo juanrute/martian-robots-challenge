@@ -33,5 +33,11 @@ namespace Application
             }
             return true;
         }
+
+
+        public override string ToString()
+        {
+            return $"{SuperiorLimit.XPosition} {SuperiorLimit.YPosition}";
+        }
     }
 }

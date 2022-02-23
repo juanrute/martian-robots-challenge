@@ -16,6 +16,8 @@ namespace Application
 
         public IRobot CurrentRobot { get; set; }
         public ISurface MarsSurface { get; set; }
+        public List<MisionResultViewModel> FinalResult { get; set; } = new List<MisionResultViewModel>();
+        public List<string> GetSimplifiedResult() => FinalResult.Select(res => res.FinalRobotPosition).ToList(); 
 
         public void IsCommandValid(List<string> input)
         {
@@ -49,30 +51,29 @@ namespace Application
             }
         }
 
-        public List<MisionResultViewModel> ExcecuteEachRobotCommand(IList<string> input)
-        {
-            var misionsResults = new List<MisionResultViewModel>();
+        public void ExcecuteEachRobotCommand(IList<string> input)
+        {           
             int index = 0;
             foreach (var line in input)
             {
-                var currentResult = new MisionResultViewModel();
                 if (index == 0)
-                {
+                {   
                     MarsSurface.SuperiorLimit = new GridCoordinate(line);
                 }
                 else if (index %2 != 0)
                 {
-                    currentResult.InitialRobotPosition = line.Trim();
                     CreateCurrentRobot(line);
                 }
                 else if (index % 2 == 0)
                 {
-                    currentResult.FinalRobotPosition = GetResultExecution(line);
-                    misionsResults.Add(currentResult);                         
+                    FinalResult.Add(new MisionResultViewModel
+                    {
+                        FinalRobotPosition = GetResultExecution(line),
+                        InitialRobotPosition = input[index - 1]
+                    }); ;                         
                 }
                 index++;
             }
-            return misionsResults;
         }
 
         private string GetResultExecution(string line)

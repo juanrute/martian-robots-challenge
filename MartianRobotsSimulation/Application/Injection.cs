@@ -1,8 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
-using System.Reflection;
-using AutoMapper;
 
 namespace Application
 {

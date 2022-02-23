@@ -13,11 +13,12 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    RobotsQuantity = table.Column<int>(nullable: false),
                     Surface = table.Column<string>(nullable: true),
-                    DateCreated = table.Column<DateTime>(nullable: false),
+                    RobotsQuantity = table.Column<int>(nullable: false),
+                    ExecutionDateTime = table.Column<DateTime>(nullable: false),
+                    RobotsInputs = table.Column<string>(nullable: true),
                     RobotsResult = table.Column<string>(nullable: true),
-                    RobotsInputs = table.Column<string>(nullable: true)
+                    Scents = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

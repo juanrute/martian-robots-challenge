@@ -1,7 +1,7 @@
-﻿using Domain.Interfaces;
+﻿using System.Linq;
 using Domain.Models;
+using Domain.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Infrastructure
 {

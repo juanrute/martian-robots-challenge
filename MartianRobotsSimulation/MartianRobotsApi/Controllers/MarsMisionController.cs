@@ -12,9 +12,9 @@ namespace MartianRobotsSimulation.Controllers
     [ApiController]
     public class MarsMisionController : ControllerBase
     {
-        private IMisionRepository repository;
+        private IMisionRepository MisionRepository;
 
-        private readonly IMapper mapper;
+        private readonly IMapper Mapper;
         public IRobotProcessor Processor { get; set; }
         public ISurface MarsSurface { get; set; }
         public MarsMisionController(IRobotProcessor _processor, ISurface _marsSurface, IMisionRepository _repository, IMapper _mapper)
@@ -22,28 +22,31 @@ namespace MartianRobotsSimulation.Controllers
             Processor = _processor;
             MarsSurface = _marsSurface;
             Processor.MarsSurface = MarsSurface;
-            repository = _repository;
-            mapper = _mapper;
+            MisionRepository = _repository;
+            Mapper = _mapper;
         }
 
         /// <summary>
         /// Return all the mision since the beginning of time.
         /// </summary>
+        /// <returns>Al the mision</returns>
+        /// <response code="200">Returns a list with all mision. Recomendation deserialize to json the values of robotsInputs,robotsResult and scents.</response>
         [HttpGet]
         public IEnumerable<MisionModel> Get()
         {
-            return repository.GetAllMisions();
+            return MisionRepository.GetAllMisions();
         }
 
         /// <summary>
         /// Get a MarsMision by id.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">Mision Identificator</param>
         /// <returns>The mision with this id</returns>
+        /// <response code="200">Returns a mision model. Recomendation deserialize to json the values of robotsInputs,robotsResult and scents.</response>
         [HttpGet("{id}")]
         public MisionModel Get(int id)
         {
-            return repository.GetById(id);
+            return MisionRepository.GetById(id);
         }
 
         /// <summary>
@@ -72,10 +75,11 @@ namespace MartianRobotsSimulation.Controllers
         public List<string> Post([FromBody] string[] inputCommand)
         {
             Processor.IsCommandValid(inputCommand.ToList());
-            var response = Processor.ExcecuteEachRobotCommand(inputCommand.ToList());
-            repository.Add(mapper.Map<MisionModel>(response));
+            Processor.ExcecuteEachRobotCommand(inputCommand.ToList());
 
-            return response.Select(res=> res.FinalRobotPosition).ToList();
+            MisionRepository.Add(Mapper.Map<MisionModel>(Processor));
+
+            return Processor.GetSimplifiedResult();
         }
     }
 }

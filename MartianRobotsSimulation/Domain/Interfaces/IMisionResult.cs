@@ -4,7 +4,6 @@
     {
         string InitialRobotPosition { get; set; }
         string FinalRobotPosition { get; set; }
-        bool IsLost { get; set; }
 
     }
 }
